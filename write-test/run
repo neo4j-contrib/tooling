@@ -1,0 +1,14 @@
+#!/bin/bash
+
+#mvn compile dependency:copy-dependencies
+
+#THE_CLASSPATH=`find target/dependency -follow -iname "*.jar"`
+THE_CLASSPATH=`echo $THE_CLASSPATH | sed -e 's/ /:/g'`
+THE_CLASSPATH=$THE_CLASSPATH:target/classes
+
+rm -f logfile
+#sync
+#vmstat -p sda1
+java -server -Xmx600M -XX:+UseConcMarkSweepGC -cp $THE_CLASSPATH org.neo4j.SimpleWriteSyncTest $*
+#vmstat -p sda1
+#time sync
